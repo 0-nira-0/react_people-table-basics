@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Loader } from './Loader';
 import { Person } from '../types';
 import { getPeople } from '../api/api';
-import { PersonLink } from './PersonLink';
+import { PeopleTable } from './PeopleTable';
 
 export const PeoplePage = () => {
   const [people, setPeople] = useState<Person[]>([]);
@@ -24,7 +24,6 @@ export const PeoplePage = () => {
         setPeople(peopleFromServer);
       } catch {
         setIsError(true);
-        throw new Error('Something went wrong');
       } finally {
         setIsLoading(false);
       }
@@ -52,27 +51,7 @@ export const PeoplePage = () => {
           )}
 
           {!isLoading && !isError && people.length !== 0 && (
-            <table
-              data-cy="peopleTable"
-              className="table is-striped is-hoverable is-narrow is-fullwidth"
-            >
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Sex</th>
-                  <th>Born</th>
-                  <th>Died</th>
-                  <th>Mother</th>
-                  <th>Father</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {peopleWithParents.map(person => (
-                  <PersonLink key={person.slug} person={person} />
-                ))}
-              </tbody>
-            </table>
+            <PeopleTable people={peopleWithParents} />
           )}
         </div>
       </div>
