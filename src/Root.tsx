@@ -5,7 +5,7 @@ import {
   Routes,
 } from 'react-router-dom';
 import { App } from './App';
-import { HomePage } from './components/HomaPage';
+import { HomePage } from './components/HomePage';
 import { PageNotFound } from './components/NotFoundPage';
 import { PeoplePage } from './components/PeoplePage';
 

@@ -2,15 +2,12 @@ import { useEffect, useState } from 'react';
 import { Loader } from './Loader';
 import { Person } from '../types';
 import { getPeople } from '../api/api';
-import { useParams } from 'react-router-dom';
-import classNames from 'classnames';
-import { PeopleLink } from './PeopleLink';
+import { PersonLink } from './PersonLink';
 
 export const PeoplePage = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { slug } = useParams();
 
   const peopleWithParents = people.map(person => ({
     ...person,
@@ -72,36 +69,7 @@ export const PeoplePage = () => {
 
               <tbody>
                 {peopleWithParents.map(person => (
-                  <tr
-                    key={person.slug}
-                    data-cy="person"
-                    className={classNames({
-                      'has-background-warning': person.slug === slug,
-                    })}
-                  >
-                    <td>
-                      <PeopleLink person={person} />
-                    </td>
-                    <td>{person.sex}</td>
-                    <td>{person.born}</td>
-                    <td>{person.died}</td>
-                    <td>
-                      {person.mother ? (
-                        <PeopleLink person={person.mother} />
-                      ) : (
-                        <>{person.motherName}</>
-                      )}
-                      {!person.motherName && '-'}
-                    </td>
-                    <td>
-                      {person.father ? (
-                        <PeopleLink person={person.father} />
-                      ) : (
-                        <>{person.fatherName}</>
-                      )}
-                      {!person.fatherName && '-'}
-                    </td>
-                  </tr>
+                  <PersonLink key={person.slug} person={person} />
                 ))}
               </tbody>
             </table>
